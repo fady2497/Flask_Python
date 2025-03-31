@@ -7,9 +7,9 @@ app = Flask(__name__)
 @app.route('/<int:valeur>')
 def exercice(valeur):
     etoiles = ''
-    for j in range(valeur, 0, -1):  # Décrémente pour faire un triangle décroissant
+    for j in range(valeur, 0, -1):  
         for i in range(j):
-            etoiles += '*'
+            etoiles += ''
         etoiles += '<br>'
     return etoiles
 
