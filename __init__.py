@@ -19,21 +19,18 @@ def calcul_somme():
         return "Veuillez entrer un nombre valide."
 
     somme = 0
-    dernier_nombre = 0
 
     for i in range(1, n + 1):
-     
         if i % 11 == 0:
             continue
 
         if i % 5 == 0 or i % 7 == 0:
-            if somme + i > 5000:
-                return f"La somme atteindrait {somme + i} en ajoutant {i}, ce qui dépasse 5000. Somme finale : {somme}. Dernier nombre ajouté : {dernier_nombre}"
-
             somme += i
-            dernier_nombre = i
 
-    return f"Somme finale : {somme}. Dernier nombre ajouté : {dernier_nombre}"
+            if somme > 5000:
+                return f"La somme dépasse 5000 ! Somme actuelle : {somme}"
+
+    return f"Somme finale : {somme}"
 
 if __name__ == '__main__':
     app.run(debug=True)
