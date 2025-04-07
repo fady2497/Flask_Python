@@ -1,28 +1,31 @@
-from flask import Flask
+from flask import Flask, request
+
 app = Flask(__name__)
 
-@app.route('/<int:valeur>')
-def exercice(valeur):
-    etoiles = ''
+@app.route('/')
+def formulaire():
+    return '''
+    <form action="/suite" method="get">
+        Entrez un nombre : <input type="number" name="valeur" min="2" required>
+        <input type="submit" value="Générer">
+    </form>
+    '''
 
-    for j in range(1, valeur + 1):
-        etoiles += '&nbsp;' * (valeur - j)
-        for i in range(1, j + 1):
-            etoiles += str(i)
-        for i in range(j - 1, 0, -1):
-            etoiles += str(i)
-        etoiles += '<br>'
+@app.route('/suite')
+def calcul_suite():
+    try:
+        n = int(request.args.get('valeur', 2))
+    except ValueError:
+        return "Veuillez entrer un nombre valide", 400
+    
+    if n < 2:
+        return "Le nombre doit être au moins 2", 400
+    
+    suite = [0, 1]
+    for i in range(2, n):
+        suite.append(suite[-1] + suite[-2])
+    
+    return f"Suite pour n={n} : {', '.join(map(str, suite))}"
 
-    a, b = 0, 1
-    suite = [a, b]
-    for _ in range(2, valeur):
-        suivant = suite[-1] + suite[-2]
-        suite.append(suivant)
-
-    etoiles += '<br><strong>Exercice 2 : Suite de calculs</strong><br>'
-    etoiles += ', '.join(map(str, suite))
-
-    return etoiles
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
