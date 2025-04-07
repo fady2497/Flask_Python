@@ -8,10 +8,10 @@ def exercice(valeurs):
     liste_nombres = [int(n) for n in liste_nombres]
 
     for i in range(len(liste_nombres) - 1):
-        if liste_nombres[i] > liste_nombres[i + 1]:
+        if liste_nombres[i] < liste_nombres[i + 1]:
             liste_nombres[i + 1] = liste_nombres[i]
 
-    return f"Le nombre maximum est : {liste_nombres[-1]}"
+    return f"Le nombre minimum est : {liste_nombres[-1]}"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
