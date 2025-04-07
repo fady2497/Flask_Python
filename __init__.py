@@ -7,13 +7,11 @@ def exercice(valeurs):
     liste_nombres = valeurs.split('/')
     liste_nombres = [int(n) for n in liste_nombres]
 
-    plus_grand = None
+    for i in range(len(liste_nombres) - 1):
+        if liste_nombres[i] > liste_nombres[i + 1]:
+            liste_nombres[i + 1] = liste_nombres[i]
 
-    for nombre in liste_nombres:
-        if plus_grand is None or nombre > plus_grand:
-            plus_grand = nombre
-
-    return f"Le nombre maximum est : {plus_grand}"
+    return f"Le nombre maximum est : {liste_nombres[-1]}"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
