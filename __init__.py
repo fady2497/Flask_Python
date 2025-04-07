@@ -1,15 +1,11 @@
-from flask import Flask
+nombres = input("Entrez des nombres séparés par des espaces : ")
 
-app = Flask(__name__)
+liste_nombres = [int(n) for n in nombres.split()]
 
-@app.route('/<path:valeurs>')
-def exercice(valeurs):
-    liste_nombres = valeurs.split('/')
-    liste_nombres = [int(n) for n in liste_nombres]
-    resultat = 0
-    for n in liste_nombres:
-        resultat = resultat + n
-    return str(resultat)
+max_nombre = liste_nombres[0]
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+for nombre in liste_nombres:
+    if nombre > max_nombre:
+        max_nombre = nombre
+
+print("Le nombre maximum est :", max_nombre)
