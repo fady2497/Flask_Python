@@ -1,40 +1,27 @@
-from flask import Flask, request
+from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/')
-def formulaire():
-    return '''
-    <form action="/calcul" method="get">
-        Entrez un nombre : <input type="number" name="n" min="1" required>
-        <input type="submit" value="Calculer">
-    </form>
-    '''
-
-@app.route('/calcul')
-def calcul_somme():
-    try:
-        n = int(request.args.get('n'))
-    except (ValueError, TypeError):
-        return "Veuillez entrer un nombre valide."
-
+@app.route('/<int:n>')
+def calcul_somme_securise(n):
     somme = 0
-
-    for i in range(1, n + 1):
-        # Si le nombre est divisible par 11, on passe au suivant
-        if i % 11 == 0:
+    nombres_ajoutes = []
+    
+    for nombre in range(1, n + 1):
+        if nombre % 11 == 0:
             continue
-
-        # Si divisible par 5 ou 7, on l'ajoute à la somme
-        if i % 5 == 0 or i % 7 == 0:
-            somme += i
-
-            # Si la somme dépasse 5000, on arrête immédiatement
-            if somme > 5000:
-                return f"La somme a dépassé 5000 et est : {somme}"
-
-    # Si la boucle se termine normalement
-    return f"La somme finale est : {somme}"
+            
+        if nombre % 5 == 0 or nombre % 7 == 0:
+            if somme + nombre > 5000:
+                break
+            somme += nombre
+            nombres_ajoutes.append(str(nombre))
+    
+    return (
+        f"Résultat pour n={n}<br><br>"
+        f"Nombres ajoutés: {', '.join(nombres_ajoutes)}<br><br>"
+        f"Somme finale: {somme} (garantie ≤ 5000)"
+    )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
