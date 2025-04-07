@@ -22,13 +22,11 @@ def calcul_somme():
     dernier_nombre = 0
 
     for i in range(1, n + 1):
-        # Si le nombre est divisible par 11, on le saute
+     
         if i % 11 == 0:
             continue
 
-        # Sinon, s'il est divisible par 5 ou par 7, on l'ajoute
         if i % 5 == 0 or i % 7 == 0:
-            # Avant d'ajouter, on vérifie si cela fera dépasser 5000
             if somme + i > 5000:
                 return f"La somme atteindrait {somme + i} en ajoutant {i}, ce qui dépasse 5000. Somme finale : {somme}. Dernier nombre ajouté : {dernier_nombre}"
 
