@@ -2,18 +2,17 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/<int:valeur>')
-def exercice(valeur):
-    pyramide = ''
-    for i in range(1, valeur + 1):
-        ligne = ''
-        ligne += ' ' * (valeur - i)
-        for j in range(1, i + 1):
-            ligne += str(j)
-        for j in range(i - 1, 0, -1):
-            ligne += str(j)
-        pyramide += ligne + '\n'
-    return f"<pre>{pyramide}</pre>"
+@app.route('/suite/<int:n>')
+def suite(n):
+    a, b = 0, 1
+    suite = []
+
+    for _ in range(n):
+        suite.append(str(a))
+        a, b = b, a + b
+
+    resultat = ', '.join(suite)
+    return f"<pre>{resultat}</pre>"
 
 if __name__ == "__main__":
     app.run(debug=True)
